@@ -4,9 +4,9 @@ game = {
     },
 
     createGameSizeSelector: function () {
-        let container = document.getElementsByClassName("container")[0];
+        let navbar = document.getElementById("navbar");
         let sizeSelector = document.createElement("select");
-        container.appendChild(sizeSelector);
+        navbar.appendChild(sizeSelector);
 
         for (let i = 3; i <= 20; i++) {
             let option = document.createElement("option");
