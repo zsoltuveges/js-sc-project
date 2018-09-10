@@ -16,6 +16,8 @@ const pathToImages = "images/cards/";
 game = {
     _gamingCardArray: [],
 
+    _faceUpCards: [],
+
     init: function () {
         this.createGameSizeSelector();
         this.addingEventListeners();
@@ -60,13 +62,33 @@ game = {
             cardFace.classList.add("card-face");
             cardFace.id = i;
             cardFace.addEventListener("click", function (target) {
-                game.rotateSelectedCard(target);
+                game.checkRotatedCard(target);
             });
 
             card.appendChild(cardFace);
             row.appendChild(card);
         }
 
+    },
+
+    checkRotatedCard: function (selectedCard) {
+        if (game._faceUpCards.length === 0) {
+            game.rotateSelectedCard(selectedCard);
+        } else if (game._faceUpCards.indexOf(this._gamingCardArray[selectedCard.target.id]) > -1) {
+            game.rotateSelectedCard(selectedCard);
+            game._faceUpCards = [];
+        } else {
+            game.rotateSelectedCard(selectedCard);
+            this.faceDownAllCards();
+            game._faceUpCards = []
+        }
+
+    },
+
+    faceDownAllCards: function () {
+        Array.from(document.getElementsByTagName("img")).forEach(function(x) {
+            x.remove()
+        });
     },
 
     rotateSelectedCard: function (selectedCard) {
@@ -76,9 +98,11 @@ game = {
         let selectedCardId = selectedCard.target.id;
         let cardImage = document.createElement("img");
         cardImage.src = pathToImages + this._gamingCardArray[selectedCardId];
+        this._faceUpCards.push(this._gamingCardArray[selectedCardId]);
         selectedCard.target.appendChild(cardImage);
 
     },
+
 
     getGamingCardArray: function (gameSize) {
         let gamingArray = cardImages.splice(0, gameSize);
