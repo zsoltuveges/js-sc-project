@@ -14,6 +14,8 @@ const cardImages = [
 const pathToImages = "images/cards/";
 
 game = {
+    _gamingCardArray: [],
+
     init: function () {
         this.createGameSizeSelector();
         this.addingEventListeners();
@@ -43,7 +45,8 @@ game = {
 
     startNewGame: function (gameSize) {
         console.log(`New game started with ${gameSize} pairs`);
-        game.fillGameTable(gameSize);
+        this._gamingCardArray = this.getGamingCardArray(gameSize);
+        this.fillGameTable(gameSize);
     },
 
     fillGameTable: function (gameSize) {
@@ -55,13 +58,28 @@ game = {
 
             let cardFace = document.createElement("div");
             cardFace.classList.add("card-face");
-            cardFace.id = "card-" + i;
+            cardFace.id = i;
+            cardFace.addEventListener("click", function (target) {
+                game.rotateSelectedCard(target);
+            });
 
             card.appendChild(cardFace);
             row.appendChild(card);
         }
 
     },
+
+    rotateSelectedCard: function (selectedCard) {
+        if (selectedCard.target.tagName === "IMG") {
+            selectedCard.target.remove();
+        }
+        let selectedCardId = selectedCard.target.id;
+        let cardImage = document.createElement("img");
+        cardImage.src = pathToImages + this._gamingCardArray[selectedCardId];
+        selectedCard.target.appendChild(cardImage);
+
+    },
+
     getGamingCardArray: function (gameSize) {
         let gamingArray = cardImages.splice(0, gameSize);
         gamingArray = this.duplicateElements(gamingArray, 2);
