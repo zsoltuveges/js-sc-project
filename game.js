@@ -28,6 +28,16 @@ game = {
 
     startNewGame: function (gameSize) {
         console.log(`New game started with ${gameSize} pairs`);
+        game.fillGameTable(gameSize);
+    },
+
+    fillGameTable: function (gameSize) {
+        let gameBody = document.getElementById("game-body");
+        for (let i = 0; i < (gameSize * 2); i++) {
+            let card = document.createElement("div");
+            card.classList.add("col");
+            gameBody.appendChild(card);
+        }
     }
 };
 
