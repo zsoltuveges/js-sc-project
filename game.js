@@ -52,7 +52,7 @@ game = {
         let row = gameBody.getElementsByClassName("row")[0];
         for (let i = 0; i < (gameSize * 2); i++) {
             let card = document.createElement("div");
-            card.classList.add("col");
+            card.classList.add("col-xs-1");
 
             let randomNumber = Math.floor((Math.random() * gamingCardArray.length));
             let cardImage = document.createElement("img");
