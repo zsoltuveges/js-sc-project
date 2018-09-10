@@ -47,21 +47,55 @@ game = {
     },
 
     fillGameTable: function (gameSize) {
+        let gamingCardArray = this.getGamingCardArray(gameSize);
         let gameBody = document.getElementById("game-body");
         let row = gameBody.getElementsByClassName("row")[0];
         for (let i = 0; i < (gameSize * 2); i++) {
             let card = document.createElement("div");
             card.classList.add("col");
 
-            let randomNumber = Math.floor((Math.random() * cardImages.length));
+            let randomNumber = Math.floor((Math.random() * gamingCardArray.length));
             let cardImage = document.createElement("img");
             cardImage.id = "card-" + i;
-            cardImage.src = pathToImages + cardImages[randomNumber];
+            cardImage.src = pathToImages + gamingCardArray[randomNumber];
+            gamingCardArray.splice(randomNumber, 1);
 
             card.appendChild(cardImage);
             row.appendChild(card);
         }
+
+    },
+    getGamingCardArray: function (gameSize) {
+        let gamingArray = cardImages.splice(0, gameSize);
+        gamingArray = this.duplicateElements(gamingArray, 2);
+        gamingArray = this.shuffle(gamingArray);
+        return gamingArray;
+    },
+
+    //I copied this function from stackoverflow
+    duplicateElements: function (array, times) {
+        return array.reduce((res, current) => {
+            return res.concat(Array(times).fill(current));
+        }, []);
+    },
+
+    //This is also from stackoverflow
+    shuffle: function (array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+
+        while (0 !== currentIndex) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
     }
+
+
 };
 
 game.init();
