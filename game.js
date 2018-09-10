@@ -47,20 +47,17 @@ game = {
     },
 
     fillGameTable: function (gameSize) {
-        let gamingCardArray = this.getGamingCardArray(gameSize);
         let gameBody = document.getElementById("game-body");
         let row = gameBody.getElementsByClassName("row")[0];
         for (let i = 0; i < (gameSize * 2); i++) {
             let card = document.createElement("div");
             card.classList.add("col-xs-1");
 
-            let randomNumber = Math.floor((Math.random() * gamingCardArray.length));
-            let cardImage = document.createElement("img");
-            cardImage.id = "card-" + i;
-            cardImage.src = pathToImages + gamingCardArray[randomNumber];
-            gamingCardArray.splice(randomNumber, 1);
+            let cardFace = document.createElement("div");
+            cardFace.classList.add("card-face");
+            cardFace.id = "card-" + i;
 
-            card.appendChild(cardImage);
+            card.appendChild(cardFace);
             row.appendChild(card);
         }
 
