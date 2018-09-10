@@ -86,9 +86,12 @@ game = {
     },
 
     faceDownAllCards: function () {
-        Array.from(document.getElementsByTagName("img")).forEach(function(x) {
-            x.remove()
-        });
+        const timer = ms => new Promise(resolve => setTimeout(resolve, ms));
+        timer(600).then(() => {
+            Array.from(document.getElementsByTagName("img")).forEach(function (x) {
+                x.remove()
+            });
+        })
     },
 
     rotateSelectedCard: function (selectedCard) {
